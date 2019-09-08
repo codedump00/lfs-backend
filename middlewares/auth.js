@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-const user = (req, res, next) => {
+const auth = (req, res, next) => {
     try {
         const decoded = jwt.verify(
             req.get("x-access-token"),
@@ -16,4 +16,4 @@ const user = (req, res, next) => {
     }
 }
 
-module.exports = { user }
+module.exports = { auth }
