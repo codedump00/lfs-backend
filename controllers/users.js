@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 const User = require("../models/users")
 
-const signup = async (req, res, next) => {
+const signup = async (req, res) => {
     try {
         const stored = await User.find({ email: req.body.email })
         if (stored.length > 0)
@@ -22,14 +22,14 @@ const signup = async (req, res, next) => {
         return res.status(201).json({
             message: "User Created"
         })
-    } catch {
+    } catch(err) {
         res.status(400).json({
             message: "Sign up failed!"
         })
     }
 }
 
-const login = async (req, res, next) => {
+const login = async (req, res) => {
     try {
         const data = await User.findOne(
             { email: req.body.email },
@@ -43,6 +43,7 @@ const login = async (req, res, next) => {
                     userId: data._id,
                     type: data.type
                 },
+                // eslint-disable-next-line no-undef
                 process.env.JWT_SECRET,
                 {
                     expiresIn: "1d"
@@ -53,27 +54,27 @@ const login = async (req, res, next) => {
                 id: data._id
             })
         }
-    } catch {
+    } catch(err) {
         return res.status(400).json({
             error: "Error logging in!!!"
         })
     }
 }
 
-const findByID = async (req, res, next) => {
+const findByID = async (req, res) => {
     try {
         const user = await User.findById(req.userData.userId, "name email type")
         return res.status(200).send({
             result: user
         })
-    } catch {
+    } catch(err) {
         return res.status(500).json({
             error: "Illegal parameters!!"
         })
     }
 }
 
-const findByUName = async (req, res, next) => {
+const findByUName = async (req, res) => {
     try {
         const user = await User.findOne(
             { name: req.params.userName },
@@ -82,14 +83,14 @@ const findByUName = async (req, res, next) => {
         return res.status(201).json({
             result: user
         })
-    } catch {
+    } catch(err) {
         return res.status(400).json({
             error: "Illegal parameters!!"
         })
     }
 }
 
-const update = async (req, res, next) => {
+const update = async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.userData.userId, req.body, {
             new: true
@@ -97,20 +98,20 @@ const update = async (req, res, next) => {
         return res.status(200).json({
             message: "Profile updated successfully."
         })
-    } catch {
+    } catch (err){
         return res.status(500).json({
             error: "Error occured!!"
         })
     }
 }
 
-const del = async (req, res, next) => {
+const del = async (req, res) => {
     try {
         await User.deleteOne({ _id: req.userData.userId })
         return res.status(200).json({
             message: "User deleted"
         })
-    } catch {
+    } catch (err){
         return res.status(400).json({
             error: "Illegal action!!"
         })

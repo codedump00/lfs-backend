@@ -1,12 +1,12 @@
 const express = require("express")
 
 // const auth = require("../middlewares/auth")
-const user = require("../controllers/users")
+const merchant = require("../controllers/merchants")
 
 const router = express.Router()
 
 /* POST methods */
-router.post("/signup/", user.signup)
-router.post("/login/", user.login)
+router.post("/register/", merchant.register)
+router.post("/login/", merchant.login)
 
 module.exports = router

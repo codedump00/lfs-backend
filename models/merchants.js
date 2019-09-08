@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const User = mongoose.Schema({
+const Merchant = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: {
         type: String,
@@ -8,11 +8,14 @@ const User = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
         unique: true,
         match: /^(([^<>()[\].,;:s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/
     },
     password: {
+        type: String,
+        required: true
+    },
+    address: {
         type: String,
         required: true
     },
@@ -22,4 +25,4 @@ const User = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("User", User)
+module.exports = mongoose.model("Merchant", Merchant)

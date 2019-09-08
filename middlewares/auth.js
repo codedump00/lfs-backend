@@ -4,6 +4,7 @@ const user = (req, res, next) => {
     try {
         const decoded = jwt.verify(
             req.get("x-access-token"),
+            // eslint-disable-next-line no-undef
             process.env.JWT_SECRET
         )
         req.userData = decoded
