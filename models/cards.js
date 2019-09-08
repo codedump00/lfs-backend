@@ -7,18 +7,22 @@ const Card = mongoose.Schema({
         required: true
     },
     offer: {
-      discount:{
+        discount: {
+            type: String,
+            required: true
+        },
+        product: {
+            type: String,
+            required: true
+        }
+    },
+    category: {
         type: String,
         required: true
-      },
-      product: {
-        type: String,
-        required: true
-      } 
     },
     timestamp: {
-      type: Date,
-      required: true
+        type: Date,
+        required: true
     }
 })
 
