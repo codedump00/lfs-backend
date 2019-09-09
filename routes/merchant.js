@@ -6,7 +6,7 @@ const merchant = require("../controllers/merchants")
 const router = express.Router()
 
 /* POST methods */
-router.post("/register/", merchant.register)
+router.post("/signup/", merchant.signup)
 router.post("/login/", merchant.login)
 
 router.get("/", auth, merchant.findByID)

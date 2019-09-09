@@ -74,7 +74,7 @@ const findByID = async (req, res) => {
     }
 }
 
-const findByUName = async (req, res) => {
+const findByName = async (req, res) => {
     try {
         const user = await User.findOne(
             { name: req.params.userName },
@@ -122,7 +122,7 @@ module.exports = {
     signup,
     login,
     findByID,
-    findByUName,
+    findByName,
     update,
     delete: del
 }

@@ -11,10 +11,9 @@ const app = express()
 app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
-mongoose
-    // eslint-disable-next-line no-undef
-    .connect(process.env.LFS_URI, { useNewUrlParser: true })
+// eslint-disable-next-line no-undef
+mongoose.connect(process.env.LFS_URI, { useNewUrlParser: true,
+     useCreateIndex:true })
     .then(() => console.log("Connected to mongodb ..."))
     .catch(err => console.log(err))
 
