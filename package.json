@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "eslint": "^6.3.0",
+    "eslint-plugin-security": "^1.4.0",
     "nodemon": "^1.19.2"
   }
 }
