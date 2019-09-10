@@ -25,7 +25,8 @@ const signup = async (req, res) => {
         })
     } catch (err) {
         res.status(400).json({
-            message: "Sign up failed!"
+            message: "Sign up failed!",
+            error: err
         })
     }
 }
