@@ -10,7 +10,7 @@ const Merchant = mongoose.Schema({
         type: String,
         unique: true,
         // eslint-disable-next-line security/detect-unsafe-regex
-        match: /^(([^<>()[\].,;:s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/
+        match:  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
     },
     password: {
         type: String,
