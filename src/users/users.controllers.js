@@ -16,7 +16,8 @@ const signup = async (req, res) => {
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
             email: req.body.email,
-            password: hash
+            password: hash,
+            timestamp: Date.now()
         })
         await user.save()
         return res.status(201).json({
@@ -24,8 +25,7 @@ const signup = async (req, res) => {
         })
     } catch (err) {
         res.status(400).json({
-            message: "Sign up failed!",
-            error: err
+            message: "Sign up failed!"
         })
     }
 }
