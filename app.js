@@ -3,17 +3,21 @@ const express = require("express")
 const logger = require("morgan")
 const mongoose = require("mongoose")
 
-const usersRouter = require("./routes/users")
-const merchantRouter = require("./routes/merchant")
+const usersRouter = require("./src/users/users.routes")
+const merchantRouter = require("./src/merchants/merchants.routes")
 
 const app = express()
 
 app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-// eslint-disable-next-line no-undef
-mongoose.connect(process.env.LFS_URI, { useNewUrlParser: true,
-     useCreateIndex:true })
+
+mongoose
+    // eslint-disable-next-line no-undef
+    .connect(process.env.LFS_URI, {
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
     .then(() => console.log("Connected to mongodb ..."))
     .catch(err => console.log(err))
 
