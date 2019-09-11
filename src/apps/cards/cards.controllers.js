@@ -1,4 +1,4 @@
-const Card = require("../models/cards")
+const Card = require("./cards.models")
 
 const register = async (req, res) => {
     try {

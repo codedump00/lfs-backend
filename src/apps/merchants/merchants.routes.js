@@ -1,6 +1,6 @@
 const express = require("express")
 
-const auth = require("../middlewares/auth")
+const auth = require("../../middlewares/auth")
 const merchant = require("./merchants.controllers")
 
 const router = express.Router()

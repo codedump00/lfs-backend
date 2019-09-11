@@ -3,8 +3,8 @@ const express = require("express")
 const logger = require("morgan")
 const mongoose = require("mongoose")
 
-const usersRouter = require("./src/users/users.routes")
-const merchantRouter = require("./src/merchants/merchants.routes")
+const usersRouter = require("./src/apps/users/users.routes")
+const merchantRouter = require("./src/apps/merchants/merchants.routes")
 
 const app = express()
 
