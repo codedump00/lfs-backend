@@ -38,6 +38,9 @@ const signup = async (req, res) => {
                     Please visit the url below to confirm your identity:\n
                     ${builder(token, "users", user._id)}
                     `
+                },
+                headers: {
+                    "Content-Type": "application/json"
                 }
             },
             function(error, response, body) {
