@@ -6,10 +6,10 @@ const user = require("./users.controllers")
 const router = express.Router()
 
 /* POST methods */
-router.post("/verify/:id/:token", user.verify)
 router.post("/signup/", user.signup)
 router.post("/login/", user.login)
 
+router.get("/verify/:id/by/:token", user.verify)
 router.get("/", auth, user.findByID)
 router.get("/name/:name", auth, user.findByName)
 
