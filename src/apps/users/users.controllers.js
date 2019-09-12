@@ -1,7 +1,9 @@
 const bcrypt = require("bcrypt")
+const request = require("request")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 const User = require("./users.models")
+const builder = require("./url.builder")
 
 const signup = async (req, res) => {
     try {
@@ -26,9 +28,30 @@ const signup = async (req, res) => {
             timestamp: Date.now()
         })
         await user.save()
-        return res.status(201).json({
-            result: "User Created"
-        })
+        request.post(
+            "https://mailer.herokuapp.com/mailer",
+            {
+                json: {
+                    to: req.body.email,
+                    subject: "User Verification",
+                    text: `
+                    Please visit the url below to confirm your identity:\n
+                    ${builder(token, "users")}
+                    `
+                }
+            },
+            function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    return res.status(201).json({
+                        result:
+                            "User Created! Please open your mail and confirm your identity!"
+                    })
+                }
+                return res.status(400).json({
+                    result: "Error sending confirmation link!!"
+                })
+            }
+        )
     } catch (err) {
         res.status(400).json({
             error: "Sign up failed!"
