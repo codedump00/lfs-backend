@@ -17,6 +17,12 @@ const signup = async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: hash,
+            verified: await bcrypt.hash(
+                `${req.body.email.split("@")[1]},
+                ${Math.random()},
+                ${Date.now()},~:'`,
+                10
+            ),
             timestamp: Date.now()
         })
         await user.save()
@@ -32,29 +38,34 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const data = await User.findOne(
-            { email: req.body.email },
-            "type email password _id"
-        )
-        const ok = await bcrypt.compare(req.body.password, data.password)
-        if (ok) {
-            const tok = jwt.sign(
-                {
-                    email: data.email,
-                    userId: data._id,
-                    type: data.type
-                },
-                // eslint-disable-next-line no-undef
-                process.env.LFS_SECRET,
-                {
-                    expiresIn: "1d"
-                }
-            )
-            return res.status(200).json({
-                token: tok,
-                id: data._id
+        const user = await User.findOne({ email: req.body.email })
+        if (user.verified === "true") {
+            const ok = await bcrypt.compare(req.body.password, user.password)
+            if (ok) {
+                const tok = jwt.sign(
+                    {
+                        email: user.email,
+                        userId: user._id,
+                        type: user.type
+                    },
+                    // eslint-disable-next-line no-undef
+                    process.env.LFS_SECRET,
+                    {
+                        expiresIn: "1d"
+                    }
+                )
+                return res.status(200).json({
+                    token: tok,
+                    id: user._id
+                })
+            }
+            return res.status(400).json({
+                error: "User verification failed!"
             })
         }
+        return res.status(400).json({
+            error: "Not verified!"
+        })
     } catch (err) {
         return res.status(400).json({
             error: "Error logging in!!!"
@@ -119,11 +130,32 @@ const del = async (req, res) => {
     }
 }
 
+const verify = async (req, res) => {
+    try {
+        const user = await User.find({ _id: req.userData.userId }, "verified")
+        const verified = await bcrypt.compare(req.params.token, user.verified)
+        if (verified) {
+            user.verified = "true"
+            return res.status(200).json({
+                message: "User verified!"
+            })
+        }
+        return res.staus(400).json({
+            error: "User verification failed!"
+        })
+    } catch (e) {
+        return res.staus(400).json({
+            error: "User verification failed!"
+        })
+    }
+}
+
 module.exports = {
     signup,
     login,
     findByID,
     findByName,
     update,
+    verify,
     delete: del
 }
