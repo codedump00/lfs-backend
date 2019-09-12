@@ -8,7 +8,7 @@ const signup = async (req, res) => {
         const stored = await User.find({ email: req.body.email })
         if (stored.length > 0)
             return res.status(409).json({
-                message: "Account creation failed. User exists."
+                error: "Account creation failed. User exists."
             })
 
         const hash = await bcrypt.hash(req.body.password, 10)
@@ -27,11 +27,11 @@ const signup = async (req, res) => {
         })
         await user.save()
         return res.status(201).json({
-            message: "User Created"
+            result: "User Created"
         })
     } catch (err) {
         res.status(400).json({
-            message: "Sign up failed!"
+            error: "Sign up failed!"
         })
     }
 }
@@ -108,7 +108,7 @@ const update = async (req, res) => {
             new: true
         })
         return res.status(200).json({
-            message: "Profile updated successfully."
+            result: "Profile updated successfully."
         })
     } catch (err) {
         return res.status(500).json({
@@ -121,7 +121,7 @@ const del = async (req, res) => {
     try {
         await User.deleteOne({ _id: req.userData.userId })
         return res.status(200).json({
-            message: "User deleted"
+            result: "User deleted"
         })
     } catch (err) {
         return res.status(400).json({
@@ -137,7 +137,7 @@ const verify = async (req, res) => {
         if (verified) {
             user.verified = "true"
             return res.status(200).json({
-                message: "User verified!"
+                result: "User verified!"
             })
         }
         return res.staus(400).json({
