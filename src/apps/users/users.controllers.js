@@ -36,7 +36,7 @@ const signup = async (req, res) => {
                     subject: "User Verification",
                     text: `
                     Please visit the url below to confirm your identity:\n
-                    ${builder(token, "users")}
+                    ${builder(token, "users", user._id)}
                     `
                 }
             },
@@ -155,7 +155,7 @@ const del = async (req, res) => {
 
 const verify = async (req, res) => {
     try {
-        const user = await User.find({ _id: req.userData.userId }, "verified")
+        const user = await User.find({ _id: req.params.id }, "verified")
         const verified = await bcrypt.compare(req.params.token, user.verified)
         if (verified) {
             user.verified = "true"
