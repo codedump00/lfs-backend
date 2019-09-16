@@ -9,7 +9,7 @@ const register = async (req, res) => {
                 product: req.body.product
             },
             category: req.body.category,
-            timestamp: req.body.timestamp
+            timestamp: Date.now()
         })
         await card.save()
         return res.status(200).json({

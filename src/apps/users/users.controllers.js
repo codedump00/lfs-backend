@@ -3,7 +3,6 @@ const axios = require("axios")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 const User = require("./users.models")
-const builder = require("./url.builder")
 
 const signup = async (req, res) => {
     try {

@@ -23,6 +23,9 @@ const Merchant = mongoose.Schema({
     timestamp: {
         type: Date,
         required: true
+    },
+    media: {
+        type: String
     }
 })
 
