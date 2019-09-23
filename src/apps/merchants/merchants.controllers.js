@@ -27,7 +27,8 @@ const signup = async (req, res) => {
             message: "Merchant Created"
         })
     } catch (err) {
-        res.status(400).json({
+        console.log(err)
+        return res.status(400).json({
             message: "Sign up failed!"
         })
     }
@@ -43,7 +44,7 @@ const login = async (req, res) => {
         if (ok) {
             const tok = jwt.sign(
                 {
-                    email: data.name,
+                    name: data.name,
                     userId: data._id
                 },
                 // eslint-disable-next-line no-undef

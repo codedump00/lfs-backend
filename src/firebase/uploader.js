@@ -1,6 +1,6 @@
 const fs = require("fs")
 const bucket = require("./firebase")
-const BUCKET_URL = `https://storage.googleapis.com/esell-e5235.appspot.com/`
+const BUCKET_URL = `https://storage.googleapis.com/lfs-cards.appspot.com/`
 
 const upload = async files => {
     try {

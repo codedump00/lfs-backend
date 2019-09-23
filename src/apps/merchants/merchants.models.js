@@ -8,7 +8,7 @@ const Merchant = mongoose.Schema({
     },
     email: {
         type: String,
-        unique: true,
+        sparse: true,
         // eslint-disable-next-line security/detect-unsafe-regex
         match: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
     },
@@ -23,13 +23,16 @@ const Merchant = mongoose.Schema({
     contact: {
         type: String
     },
+    category: {
+        type: String
+    },
     timestamp: {
         type: Date,
         required: true
     },
     media: {
         type: Object
-    }
+    },
 })
 
 module.exports = mongoose.model("Merchant", Merchant)

@@ -2,7 +2,7 @@ const admin = require("firebase-admin")
 
 let serviceAccount =
     process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-    require("/home/bee/secrets.json")
+    require("/home/bee/lfs-cards-secrets.json")
 
 serviceAccount =
     typeof serviceAccount === "object"
@@ -11,7 +11,7 @@ serviceAccount =
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "gs://esell-e5235.appspot.com/"
+    storageBucket: "gs://lfs-cards.appspot.com/"
 })
 
 module.exports = admin.storage().bucket()
