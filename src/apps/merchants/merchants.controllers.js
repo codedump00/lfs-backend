@@ -143,6 +143,10 @@ const imageUpload = function(req, res) {
     // req.body will contain the text fields, if there were any
     upload(req.files)
         .then(media => {
+            if (media.error)
+                return res.status(400).json({
+                    error: "Image uploading failed."
+                })
             Merchant.findByIdAndUpdate(req.userData.userId, {
                 media: media
             })
