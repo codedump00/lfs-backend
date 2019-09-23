@@ -64,6 +64,19 @@ const login = async (req, res) => {
     }
 }
 
+const get = async (req, res) => {
+    try {
+        const merchants = await Merchant.find()
+        return res.status(200).send({
+            result: merchants
+        })
+    } catch (err) {
+        return res.status(500).json({
+            error: "Illegal parameters!!"
+        })
+    }
+}
+
 const findByID = async (req, res) => {
     try {
         const merchant = await Merchant.findById(
@@ -146,6 +159,7 @@ const imageUpload = function(req, res) {
 module.exports = {
     signup,
     login,
+    get,
     findByID,
     findByName,
     update,

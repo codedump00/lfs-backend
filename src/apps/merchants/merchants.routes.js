@@ -10,8 +10,9 @@ router.post("/signup/", merchant.signup)
 router.post("/login/", merchant.login)
 router.post("/image/", merchant.upload)
 
-router.get("/", auth, merchant.findByID)
-router.get("/name/:name", auth, merchant.findByName)
+router.get("/", merchant.get)
+
+router.get("/id", auth, merchant.findByID)
 
 router.put("/", auth, merchant.update)
 
