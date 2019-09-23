@@ -20,6 +20,9 @@ const Merchant = mongoose.Schema({
         type: String,
         required: true
     },
+    contact: {
+        type: String
+    },
     timestamp: {
         type: Date,
         required: true

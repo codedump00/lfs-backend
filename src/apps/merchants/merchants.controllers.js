@@ -6,7 +6,7 @@ const { upload, remove } = require("../../firebase/uploader")
 
 const signup = async (req, res) => {
     try {
-        const stored = await Merchant.find({ email: req.body.email })
+        const stored = await Merchant.find({ name: req.body.name })
         if (stored.length > 0)
             return res.status(409).json({
                 message: "Account creation failed. Merchant exists."
@@ -16,8 +16,11 @@ const signup = async (req, res) => {
         const merchant = Merchant({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
-            email: req.body.email,
-            password: hash
+            contact: req.body.contact,
+            address: req.body.address,
+            category: req.body.category,
+            password: hash,
+            timestamp: Date.now()
         })
         await merchant.save()
         return res.status(201).json({
@@ -33,14 +36,14 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
     try {
         const data = await Merchant.findOne(
-            { email: req.body.email },
-            "type email password _id"
+            { name: req.body.name },
+            "name password _id"
         )
         const ok = await bcrypt.compare(req.body.password, data.password)
         if (ok) {
             const tok = jwt.sign(
                 {
-                    email: data.email,
+                    email: data.name,
                     userId: data._id
                 },
                 // eslint-disable-next-line no-undef
