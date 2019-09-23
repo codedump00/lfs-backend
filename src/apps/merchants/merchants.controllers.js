@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 const Merchant = require("./merchants.models")
+const { upload, remove } = require("../../firebase/uploader")
 
 const signup = async (req, res) => {
     try {
@@ -120,11 +121,31 @@ const del = async (req, res) => {
     }
 }
 
+const imageUpload = function(req, res) {
+    // req.files is array of `photos` files
+    // req.body will contain the text fields, if there were any
+    upload(req.files)
+        .then(media => {
+            Merchant.findByIdAndUpdate(req.userData.userId, {
+                media: media
+            })
+            return res.status(201).json({
+                media: media
+            })
+        })
+        .catch(() =>
+            res.status(400).json({
+                error: "Image uploading failed."
+            })
+        )
+}
+
 module.exports = {
     signup,
     login,
     findByID,
     findByName,
     update,
-    delete: del
+    delete: del,
+    upload: imageUpload
 }

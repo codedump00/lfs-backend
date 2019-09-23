@@ -4,6 +4,7 @@ const logger = require("morgan")
 const mongoose = require("mongoose")
 
 const usersRouter = require("./src/apps/users/users.routes")
+const cardsRouter = require("./src/apps/cards/cards.routes")
 const merchantRouter = require("./src/apps/merchants/merchants.routes")
 
 const app = express()
@@ -23,6 +24,7 @@ mongoose
 
 app.use("/users", usersRouter)
 app.use("/merchants", merchantRouter)
+app.use("/cards", cardsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
