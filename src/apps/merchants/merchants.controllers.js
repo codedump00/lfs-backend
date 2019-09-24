@@ -67,7 +67,10 @@ const login = async (req, res) => {
 
 const get = async (req, res) => {
     try {
-        const merchants = await Merchant.find()
+        const merchants = await Merchant.find(
+            {},
+            "name address contact category timestamp media"
+        )
         return res.status(200).send({
             result: merchants
         })
@@ -138,27 +141,26 @@ const del = async (req, res) => {
     }
 }
 
-const imageUpload = function(req, res) {
+const imageUpload = async (req, res) => {
     // req.files is array of `photos` files
     // req.body will contain the text fields, if there were any
-    upload(req.files)
-        .then(media => {
-            if (media.error)
-                return res.status(400).json({
-                    error: "Image uploading failed."
-                })
-            Merchant.findByIdAndUpdate(req.userData.userId, {
-                media: media
-            })
-            return res.status(201).json({
-                media: media
-            })
-        })
-        .catch(() =>
-            res.status(400).json({
+    try {
+        const media = await upload(req.files)
+        if (media.error)
+            return res.status(400).json({
                 error: "Image uploading failed."
             })
-        )
+        await Merchant.findByIdAndUpdate(req.userData.userId, {
+            media: media
+        })
+        return res.status(201).json({
+            media: media
+        })
+    } catch (err) {
+        return res.status(400).json({
+            error: "Image uploading failed."
+        })
+    }
 }
 
 module.exports = {
