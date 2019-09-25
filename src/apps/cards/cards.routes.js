@@ -8,7 +8,9 @@ const router = express.Router()
 /* POST methods */
 router.post("/register/", card.register)
 
-router.get("/", auth, card.find)
+router.get("/", card.find)
+
+router.get("/all", card.get)
 
 // router.put("/", auth, card.update)
 

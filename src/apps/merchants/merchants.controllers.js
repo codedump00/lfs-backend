@@ -113,6 +113,25 @@ const findByName = async (req, res) => {
     }
 }
 
+
+const category = async (req, res) => {
+    try {
+        const merchants = await Merchant.find({
+            category: {
+                $regex: RegExp(`${req.params.category}`),
+                $options: "i"
+            }
+        })
+        return res.status(200).json({
+            result: merchants
+        })
+    } catch (e) {
+        return res.status(400).json({
+            error: "Merchants not found!"
+        })
+    }
+}
+
 const update = async (req, res) => {
     try {
         await Merchant.findByIdAndUpdate(req.userData.userId, req.body, {
@@ -171,5 +190,6 @@ module.exports = {
     findByName,
     update,
     delete: del,
-    upload: imageUpload
+    upload: imageUpload,
+    category
 }
