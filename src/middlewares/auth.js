@@ -1,19 +1,25 @@
 const jwt = require("jsonwebtoken")
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
     try {
-        const decoded = jwt.verify(
+        jwt.verify(
             req.get("x-access-token"),
             // eslint-disable-next-line no-undef
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,
+            (err, decoded) => {
+                if (err)
+                    return res.status(401).json({
+                        error: "Token Invalid!"
+                    })
+                req.userData = decoded
+                next()
+            }
         )
-        req.userData = decoded
-        next()
     } catch (err) {
         return res.status(401).json({
-            message: "Auth failed"
+            error: "Auth failed"
         })
     }
 }
 
-module.exports = auth 
+module.exports = auth
