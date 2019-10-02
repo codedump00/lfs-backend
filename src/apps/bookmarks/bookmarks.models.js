@@ -6,7 +6,7 @@ const Bookmarks = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    bookmarks: [{ type: string }],
+    bookmarks: [{ type: mongoose.Schema.Types.ObjectId }],
     timestamp: {
         type: Date,
         required: true
