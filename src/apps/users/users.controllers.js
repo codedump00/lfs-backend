@@ -3,6 +3,7 @@ const axios = require("axios")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 const User = require("./users.models")
+const availableIds = require("../../db/db.ids")
 
 const signup = async (req, res) => {
     try {
@@ -11,18 +12,17 @@ const signup = async (req, res) => {
             return res.status(409).json({
                 error: "Account creation failed. User exists."
             })
-
+        if (!availableIds().contains(req.body.card_id))
+            return res.status(409).json({
+                error: "Account creation failed. Illegal card ID."
+            })
         const user = User({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),
-            verified: await bcrypt.hash(
-                `${req.body.email.split("@")[1]},
-                ${Math.random()},
-                ${Date.now()},~:'`,
-                10
-            ),
+            card_id: req.body.card_id,
+            verified: Math.floor(Math.random() * 1000000 + 54),
             timestamp: Date.now()
         })
         await user.save()
@@ -33,8 +33,8 @@ const signup = async (req, res) => {
                 to: `${req.body.email}`,
                 subject: "User Verification",
                 text: `
-                    Please visit the url below to confirm your identity:\n
-                    http://localhost:3000/users/verify/${user._id}/by/${user.verified}`
+                    Your activation code is: \n
+                    ${user.verified}`
             },
             headers: {
                 "Content-Type": "application/json"

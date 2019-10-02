@@ -22,6 +22,10 @@ const User = mongoose.Schema({
         type: String,
         required: true
     },
+    card_id: {
+        type: String,
+        required: true
+    },
     timestamp: {
         type: Date,
         required: true
