@@ -69,7 +69,7 @@ const get = async (req, res) => {
     try {
         const merchants = await Merchant.find(
             {},
-            "name address contact category timestamp media"
+            "name address location contact category timestamp media"
         )
         return res.status(200).send({
             result: merchants

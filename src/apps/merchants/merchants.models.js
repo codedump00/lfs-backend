@@ -20,6 +20,9 @@ const Merchant = mongoose.Schema({
         type: String,
         required: true
     },
+    location: {
+        type: Array
+    },
     contact: {
         type: String
     },
