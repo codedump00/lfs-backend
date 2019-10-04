@@ -48,7 +48,7 @@ const login = async (req, res) => {
                     userId: data._id
                 },
                 // eslint-disable-next-line no-undef
-                process.env.JWT_SECRET,
+                process.env.LFS_SECRET,
                 {
                     expiresIn: "1d"
                 }

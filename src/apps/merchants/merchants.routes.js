@@ -9,7 +9,7 @@ const router = express.Router()
 /* POST methods */
 router.post("/signup/", merchant.signup)
 router.post("/login/", merchant.login)
-router.post("/image/", auth, upload, merchant.upload)
+router.post("/image/" , auth, upload, merchant.upload)
 
 router.get("/", merchant.get)
 router.get("/id", merchant.findByID)
