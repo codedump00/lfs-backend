@@ -7,7 +7,10 @@ const availableIds = require("../../db/db.ids")
 
 const signup = async (req, res) => {
     try {
-        const stored = await User.find({ email: req.body.email })
+        const stored = await User.find({
+            email: req.body.email,
+            card_id: req.body.card_id
+        })
         if (stored.length > 0)
             return res.status(409).json({
                 error: "Account creation failed. User exists."
@@ -174,6 +177,22 @@ const verify = async (req, res) => {
     }
 }
 
+const verifyCard = async (req, res) => {
+    try {
+        if (availableIds.contains(req.params.id))
+            return res.status(200).json({
+                message: "Valid ID"
+            })
+        return res.status(400).json({
+            error: "Card doesn't exist!"
+        })
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error ocurred!"
+        })
+    }
+}
+
 module.exports = {
     signup,
     login,
@@ -181,5 +200,6 @@ module.exports = {
     findByName,
     update,
     verify,
+    verifyCard,
     delete: del
 }

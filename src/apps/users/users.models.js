@@ -24,7 +24,8 @@ const User = mongoose.Schema({
     },
     card_id: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     timestamp: {
         type: Date,
