@@ -179,7 +179,7 @@ const verify = async (req, res) => {
 
 const verifyCard = async (req, res) => {
     try {
-        if (availableIds.includes(req.params.id))
+        if (availableIds().includes(req.params.id))
             return res.status(200).json({
                 message: "Valid ID"
             })
