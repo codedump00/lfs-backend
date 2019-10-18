@@ -15,7 +15,7 @@ const signup = async (req, res) => {
             return res.status(409).json({
                 error: "Account creation failed. User exists."
             })
-        if (!availableIds().contains(req.body.card_id))
+        if (!availableIds().includes(req.body.card_id))
             return res.status(400).json({
                 error: "Account creation failed. Illegal card ID."
             })
@@ -179,7 +179,7 @@ const verify = async (req, res) => {
 
 const verifyCard = async (req, res) => {
     try {
-        if (availableIds.contains(req.params.id))
+        if (availableIds.includes(req.params.id))
             return res.status(200).json({
                 message: "Valid ID"
             })
