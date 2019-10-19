@@ -46,8 +46,8 @@ const signup = async (req, res) => {
             .then(data => {
                 // console.log(data)
                 return res.status(201).json({
-                    result:
-                        "User Created! Please open your mail and confirm your identity!"
+                    message: `User Created! An activation code has been sent to ${user.email}!`,
+                    id: user._id
                 })
             })
             .catch(() => {
@@ -160,7 +160,7 @@ const del = async (req, res) => {
 const verify = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id }, "verified")
-        if (req.params.token === user.verified) {
+        if (req.params.code === user.verified) {
             user.verified = "true"
             user.save()
             return res.status(200).json({
