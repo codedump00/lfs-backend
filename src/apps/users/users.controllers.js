@@ -159,8 +159,10 @@ const del = async (req, res) => {
 
 const reSendCode = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.params.id }, "verified email")
-        console.log(user.verified, user.email, user)
+        const user = await User.findOne(
+            { _id: req.params.id },
+            "verified email"
+        )
         if (user.verified !== "true")
             axios({
                 method: "POST",
@@ -177,7 +179,6 @@ const reSendCode = async (req, res) => {
                 }
             })
                 .then(() => {
-                    // console.log(data)
                     return res.status(201).json({
                         result: `Confirmation link resent!`
                     })
