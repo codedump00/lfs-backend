@@ -58,7 +58,7 @@ const signup = async (req, res) => {
             })
     } catch (err) {
         res.status(400).json({
-            error: "Sign up failed!",
+            error: "Sign up failed!"
         })
     }
 }
@@ -159,11 +159,35 @@ const del = async (req, res) => {
 
 const reSendCard = async (req, res) => {
     try {
-        let user = await User.findOne({ _id: req.params.id }, "verified")
+        let user = await User.findOne({ _id: req.params.id }, "verified email")
         if (user.verified !== "true")
-            return res.status(200).json({
-                result: user.verified
+            axios({
+                method: "POST",
+                url: "https://lightmailer.herokuapp.com/mailer",
+                data: {
+                    to: `${user.email}`,
+                    subject: "User Verification",
+                    text: `
+                    Your activation code is: \n
+                    ${user.verified}`
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
             })
+                .then(data => {
+                    // console.log(data)
+                    return res.status(201).json({
+                        message: `User Created! An activation code has been sent to ${user.email}!`,
+                        id: user._id
+                    })
+                })
+                .catch(() => {
+                    res.status(400).json({
+                        mailErr: "Error sending confirmation link!!",
+                        id: user._id
+                    })
+                })
         return res.status(400).json({
             error: "Illegal query!"
         })
