@@ -163,7 +163,7 @@ const reSendCode = async (req, res) => {
             { _id: req.params.id },
             "verified email _id"
         )
-        console.log(user.verified, user.email)
+        console.log(user.verified, user.email, user)
         if (user.verified !== "true")
             axios({
                 method: "POST",
