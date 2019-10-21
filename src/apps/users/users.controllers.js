@@ -157,9 +157,9 @@ const del = async (req, res) => {
     }
 }
 
-const reSendCard = async (req, res) => {
+const reSendCode = async (req, res) => {
     try {
-        let user = await User.findOne({ _id: req.params.id }, "verified email")
+        let user = await User.find({ _id: req.params.id }, "verified email")
         if (user.verified !== "true")
             axios({
                 method: "POST",
@@ -242,6 +242,6 @@ module.exports = {
     update,
     verify,
     verifyCard,
-    reSendCard,
+    reSendCode,
     delete: del
 }
