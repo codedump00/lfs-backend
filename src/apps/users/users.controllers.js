@@ -159,7 +159,10 @@ const del = async (req, res) => {
 
 const reSendCode = async (req, res) => {
     try {
-        let user = await User.find({ _id: req.params.id }, "verified email _id")
+        const user = await User.find(
+            { _id: req.params.id },
+            "verified email _id"
+        )
 
         if (user.verified !== "true")
             axios({
@@ -176,16 +179,16 @@ const reSendCode = async (req, res) => {
                     "Content-Type": "application/json"
                 }
             })
-                .then(data => {
+                .then(() => {
                     // console.log(data)
                     return res.status(201).json({
                         message: `User Created! An activation code has been sent to ${user.email}!`,
                         id: user._id
                     })
                 })
-                .catch(() => {
+                .catch(err => {
                     res.status(400).json({
-                        mailErr: `Error sending confirmation link!!${user}`,
+                        mailErr: `Error sending confirmation link!!${err}`,
                         id: user._id
                     })
                 })
