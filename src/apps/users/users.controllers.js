@@ -159,7 +159,8 @@ const del = async (req, res) => {
 
 const reSendCode = async (req, res) => {
     try {
-        let user = await User.find({ _id: req.params.id }, "verified email")
+        let user = await User.find({ _id: req.params.id }, "verified email _id")
+
         if (user.verified !== "true")
             axios({
                 method: "POST",
@@ -189,7 +190,7 @@ const reSendCode = async (req, res) => {
                     })
                 })
         return res.status(400).json({
-            error: "Illegal query!"
+            error: `Illegal query! ${user}`
         })
     } catch (e) {
         return res.status(400).json({
