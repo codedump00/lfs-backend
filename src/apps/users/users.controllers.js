@@ -159,10 +159,7 @@ const del = async (req, res) => {
 
 const reSendCode = async (req, res) => {
     try {
-        const user = await User.find(
-            { _id: req.params.id },
-            "verified email _id"
-        )
+        const user = await User.findOne({ _id: req.params.id }, "verified email")
         console.log(user.verified, user.email, user)
         if (user.verified !== "true")
             axios({
@@ -182,14 +179,12 @@ const reSendCode = async (req, res) => {
                 .then(() => {
                     // console.log(data)
                     return res.status(201).json({
-                        result: `Confirmation link resent!`,
-                        id: user._id
+                        result: `Confirmation link resent!`
                     })
                 })
                 .catch(err => {
                     return res.status(400).json({
-                        mailErr: `Error sending confirmation link!!`,
-                        id: user._id
+                        mailErr: `Error sending confirmation link!!`
                     })
                 })
     } catch (e) {
