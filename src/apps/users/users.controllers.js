@@ -185,7 +185,7 @@ const reSendCode = async (req, res) => {
                 })
                 .catch(() => {
                     res.status(400).json({
-                        mailErr: "Error sending confirmation link!!",
+                        mailErr: `Error sending confirmation link!!${user}`,
                         id: user._id
                     })
                 })
