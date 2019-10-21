@@ -7,7 +7,7 @@ const availableIds = require("../../db/db.ids")
 
 const signup = async (req, res) => {
     try {
-        const stored = await User.find({
+        const stored = await User.findOne({
             email: req.body.email,
             card_id: req.body.card_id
         })
@@ -52,13 +52,13 @@ const signup = async (req, res) => {
             })
             .catch(() => {
                 res.status(400).json({
-                    result: "Error sending confirmation link!!"
+                    mailErr: "Error sending confirmation link!!",
+                    id: user._id
                 })
             })
     } catch (err) {
         res.status(400).json({
-            error: "Sign up failed!",
-            err: err
+            error: "Sign up failed!"
         })
     }
 }
@@ -157,6 +157,23 @@ const del = async (req, res) => {
     }
 }
 
+const reSendCard = async (req, res) => {
+    try {
+        let user = await User.findOne({ _id: req.params.id }, "verified")
+        if (user.verified !== "true")
+            return res.status(200).json({
+                result: user.verified
+            })
+        return res.status(400).json({
+            error: "Illegal query!"
+        })
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error ocurred!"
+        })
+    }
+}
+
 const verify = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id }, "verified")
@@ -201,5 +218,6 @@ module.exports = {
     update,
     verify,
     verifyCard,
+    reSendCard,
     delete: del
 }
