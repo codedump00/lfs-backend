@@ -189,9 +189,6 @@ const reSendCode = async (req, res) => {
                         id: user._id
                     })
                 })
-        return res.status(400).json({
-            error: `Illegal query! ${user}`
-        })
     } catch (e) {
         return res.status(400).json({
             error: "Error ocurred!"
