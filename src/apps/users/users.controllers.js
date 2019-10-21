@@ -7,7 +7,7 @@ const availableIds = require("../../db/db.ids")
 
 const signup = async (req, res) => {
     try {
-        const stored = await User.findOne({
+        const stored = await User.find({
             email: req.body.email,
             card_id: req.body.card_id
         })
@@ -58,7 +58,7 @@ const signup = async (req, res) => {
             })
     } catch (err) {
         res.status(400).json({
-            error: "Sign up failed!"
+            error: "Sign up failed!",
         })
     }
 }
