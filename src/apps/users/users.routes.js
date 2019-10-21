@@ -8,9 +8,9 @@ const router = express.Router()
 /* POST methods */
 router.post("/signup/", user.signup)
 router.post("/login/", user.login)
+router.post("/verify/resend/:id", user.reSendCode)
 
 router.get("/card/verify/:id", user.verifyCard)
-router.get("/verify/resend/:id", user.reSendCode)
 router.get("/verify/:id/by/:code", user.verify)
 router.get("/", auth, user.findByID)
 router.get("/name/:name", auth, user.findByName)

@@ -182,7 +182,7 @@ const reSendCode = async (req, res) => {
                 .then(() => {
                     // console.log(data)
                     return res.status(201).json({
-                        message: `User Created! An activation code has been sent to ${user.email}!`,
+                        result: `Confirmation link resent!`,
                         id: user._id
                     })
                 })
