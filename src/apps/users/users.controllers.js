@@ -163,7 +163,7 @@ const reSendCode = async (req, res) => {
             { _id: req.params.id },
             "verified email _id"
         )
-
+        console.log(user.verified, user.email)
         if (user.verified !== "true")
             axios({
                 method: "POST",
@@ -187,7 +187,6 @@ const reSendCode = async (req, res) => {
                     })
                 })
                 .catch(err => {
-                    console.log(err.err)    
                     return res.status(400).json({
                         mailErr: `Error sending confirmation link!!`,
                         id: user._id
