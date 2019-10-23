@@ -102,7 +102,10 @@ const login = async (req, res) => {
 
 const findByID = async (req, res) => {
     try {
-        const user = await User.findById(req.userData.userId, "name email type")
+        const user = await User.findById(
+            req.userData.userId,
+            "name email type card_id favourites timestamp"
+        )
         return res.status(200).send({
             result: user
         })
@@ -231,6 +234,44 @@ const verifyCard = async (req, res) => {
     }
 }
 
+const updateFavourites = async (req, res) => {
+    try {
+        const user = await User.findOne(
+            { _id: req.userData.userId },
+            "favourites"
+        )
+        if (!user.favourites.includes(req.body.id))
+            user.favourites.push(req.body.id)
+
+        await user.save()
+        return res.status(200).json({
+            message: "Favourites updated!"
+        })
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error occured!"
+        })
+    }
+}
+
+const deleteFavourites = async (req, res) => {
+    try {
+        const user = await User.findOne(
+            { _id: req.userData.userId },
+            "favourites"
+        )
+        if (user.favourites.includes(req.body.id))
+            user.favourites.slice(user.favourites.indexOf(req.body.id), 1)
+        return res.status(200).json({
+            result: "Favourites updated!"
+        })
+    } catch (e) {
+        return res.status(400).json({
+            result: "Error occured!"
+        })
+    }
+}
+
 module.exports = {
     signup,
     login,
@@ -240,5 +281,7 @@ module.exports = {
     verify,
     verifyCard,
     reSendCode,
+    updateFavourites,
+    deleteFavourites,
     delete: del
 }

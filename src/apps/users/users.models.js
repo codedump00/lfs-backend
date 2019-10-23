@@ -27,6 +27,7 @@ const User = mongoose.Schema({
         required: true,
         unique: true
     },
+    favourites: [{type: mongoose.Schema.Types.ObjectId}],
     timestamp: {
         type: Date,
         required: true

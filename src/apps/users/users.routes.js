@@ -16,7 +16,9 @@ router.get("/", auth, user.findByID)
 router.get("/name/:name", auth, user.findByName)
 
 router.put("/", auth, user.update)
+router.put("/update/favourites", auth, user.updateFavourites)
 
 router.delete("/", auth, user.delete)
+router.delete("/remove/favourites", auth, user.deleteFavourites)
 
 module.exports = router
