@@ -19,6 +19,6 @@ router.put("/", auth, user.update)
 router.put("/update/favourites", auth, user.updateFavourites)
 
 router.delete("/", auth, user.delete)
-router.delete("/remove/favourites", auth, user.deleteFavourites)
+router.delete("/remove/favourites/:id", auth, user.deleteFavourites)
 
 module.exports = router
