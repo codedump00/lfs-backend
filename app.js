@@ -3,6 +3,7 @@ const express = require("express")
 const logger = require("morgan")
 const mongoose = require("mongoose")
 
+const adminRouter = require("./src/apps/admin/admin.routes")
 const usersRouter = require("./src/apps/users/users.routes")
 const cardsRouter = require("./src/apps/cards/cards.routes")
 const merchantRouter = require("./src/apps/merchants/merchants.routes")
@@ -22,22 +23,7 @@ mongoose
     .then(() => console.log("Connected to mongodb ..."))
     .catch(err => console.log(err))
 
-app.get("/admin/:token", async (req, res) => {
-    try {
-        if (req.params.token === process.env.LFS_ADMIN)
-            return res.status(200).json({
-                verifed: true
-            })
-        return res.status(400).json({
-            verifed: false
-        })
-    } catch {
-        return res.status(200).json({
-            verifed: false
-        })
-    }
-})
-
+app.use("/admin", adminRouter)
 app.use("/users", usersRouter)
 app.use("/merchants", merchantRouter)
 app.use("/cards", cardsRouter)
