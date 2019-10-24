@@ -22,4 +22,16 @@ const auth = async (req, res, next) => {
     }
 }
 
-module.exports = auth
+const admin = async (req, res, next) => {
+    try {
+        if (req.get("x-access-token") === process.env.LFS_ADMIN)
+            req.admin = true
+        next()
+    } catch (err) {
+        return res.status(401).json({
+            error: "Auth failed"
+        })
+    }
+}
+
+module.exports = { admin, auth }

@@ -1,22 +1,21 @@
 const express = require("express")
 
-const auth = require("../../middlewares/auth")
+const { admin } = require("../../middlewares/auth")
 const merchant = require("./merchants.controllers")
 const upload = require("../../middlewares/multer")
 
 const router = express.Router()
 
 /* POST methods */
-router.post("/signup/", merchant.signup)
-router.post("/login/", merchant.login)
-router.post("/image/" , auth, upload, merchant.upload)
+router.post("/create/", merchant.signup)
+router.post("/image/:id", admin, upload, merchant.upload)
 
 router.get("/", merchant.get)
 router.get("/id", merchant.findByID)
 router.get("/category", merchant.category)
 
-router.put("/", auth, merchant.update)
+router.put("/:id", admin, merchant.update)
 
-router.delete("/", auth, merchant.delete)
+router.delete("/:id", admin, merchant.delete)
 
 module.exports = router
