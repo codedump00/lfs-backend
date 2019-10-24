@@ -139,10 +139,8 @@ const imageUpload = async (req, res) => {
 
 module.exports = {
     create,
-    login,
     get,
     findByID,
-    findByName,
     update,
     delete: del,
     upload: imageUpload,

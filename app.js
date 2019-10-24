@@ -22,7 +22,22 @@ mongoose
     .then(() => console.log("Connected to mongodb ..."))
     .catch(err => console.log(err))
 
-app.get("/admin/:token", verifyAdmin)
+app.get("/admin/:token", async (req, res) => {
+    try {
+        if (req.params.token === process.env.LFS_ADMIN)
+            return res.status(200).json({
+                verifed: true
+            })
+        return res.status(400).json({
+            verifed: false
+        })
+    } catch {
+        return res.status(200).json({
+            verifed: false
+        })
+    }
+})
+
 app.use("/users", usersRouter)
 app.use("/merchants", merchantRouter)
 app.use("/cards", cardsRouter)
@@ -42,21 +57,5 @@ app.use(function(err, req, res) {
         error: "error ocurred!"
     })
 })
-
-const verifyAdmin = async (req, res) => {
-    try {
-        if (req.params.token === process.env.LFS_ADMIN)
-            return res.status(200).json({
-                verifed: true
-            })
-        return res.status(400).json({
-            verifed: false
-        })
-    } catch {
-        return res.status(200).json({
-            verifed: false
-        })
-    }
-}
 
 module.exports = app

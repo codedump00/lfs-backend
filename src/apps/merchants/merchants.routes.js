@@ -7,7 +7,7 @@ const upload = require("../../middlewares/multer")
 const router = express.Router()
 
 /* POST methods */
-router.post("/create/", merchant.signup)
+router.post("/create/", merchant.create)
 router.post("/image/:id", admin, upload, merchant.upload)
 
 router.get("/", merchant.get)
