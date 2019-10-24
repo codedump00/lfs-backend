@@ -2,6 +2,7 @@ const createError = require("http-errors")
 const express = require("express")
 const logger = require("morgan")
 const mongoose = require("mongoose")
+const cors = require("cors")
 
 const adminRouter = require("./src/apps/admin/admin.routes")
 const usersRouter = require("./src/apps/users/users.routes")
@@ -10,6 +11,7 @@ const merchantRouter = require("./src/apps/merchants/merchants.routes")
 
 const app = express()
 
+app.use(cors())
 app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
