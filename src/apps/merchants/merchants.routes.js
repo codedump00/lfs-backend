@@ -15,6 +15,7 @@ router.get("/id", merchant.findByID)
 router.get("/category", merchant.category)
 
 router.put("/:id", admin, merchant.update)
+router.put("/image/:id", admin, upload, merchant.updateImages)
 
 router.delete("/:id", admin, merchant.delete)
 

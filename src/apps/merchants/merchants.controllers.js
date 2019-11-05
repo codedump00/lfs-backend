@@ -137,6 +137,23 @@ const imageUpload = async (req, res) => {
     }
 }
 
+const updateImages = async (req, res) => {
+    try {
+        const media = await upload(req.files)
+        if (media.error)
+            return res.status(400).json({
+                error: "Image uploading failed."
+            })
+        const merchant = await Merchant.findById(req.params.id)
+        merchant.media.names.concat(media.names)
+        merchant.media.src.concat(media.src)
+        await merchant.save()
+        return res.status(201).json({
+            media: merchant.media
+        })
+    } catch (err) {}
+}
+
 module.exports = {
     create,
     get,
@@ -144,5 +161,6 @@ module.exports = {
     update,
     delete: del,
     upload: imageUpload,
-    category
+    category,
+    updateImages
 }

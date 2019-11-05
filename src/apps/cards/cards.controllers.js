@@ -3,12 +3,8 @@ const Card = require("./cards.models")
 const register = async (req, res) => {
     try {
         const card = Card({
-            merchant: req.userData.userId,
-            offer: {
-                discount: req.body.discount,
-                product: req.body.product
-            },
-            category: req.body.category,
+            user: req.body.user,
+            card: req.body.card,
             timestamp: Date.now()
         })
         await card.save()
@@ -25,7 +21,7 @@ const register = async (req, res) => {
 
 const find = async (req, res) => {
     try {
-        const card = await Card.findById(req.params.id)
+        const card = await Card.findOne({ card: req.params.card })
         return res.status(200).json({
             result: card
         })
@@ -36,44 +32,9 @@ const find = async (req, res) => {
     }
 }
 
-const get = async (req, res) => {
-    try {
-        const card = await Card.find()
-        if (card.length > 0)
-            return res.status(200).json({
-                result: card
-            })
-        return res.status(200).json({
-            empty: "Card is empty!"
-        })
-    } catch (e) {
-        return res.status(400).json({
-            error: "Card not found!"
-        })
-    }
-}
-
-const category = async (req, res) => {
-    try {
-        const cards = await Card.find({
-            category: {
-                $regex: RegExp(`${req.params.category}`),
-                $options: "i"
-            }
-        })
-        return res.status(200).json({
-            result: cards
-        })
-    } catch (e) {
-        return res.status(400).json({
-            error: "Card not found!"
-        })
-    }
-}
-
 const del = async (req, res) => {
     try {
-        await Card.deleteOne({ _id: req.body.id })
+        await Card.deleteOne({ _id: req.params.id })
         return res.status(200).json({
             message: "Card deleted!"
         })
@@ -84,4 +45,4 @@ const del = async (req, res) => {
     }
 }
 
-module.exports = { register, delete: del, find, category, get }
+module.exports = { register, delete: del, find }
