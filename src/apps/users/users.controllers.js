@@ -260,8 +260,10 @@ const deleteFavourites = async (req, res) => {
             { _id: req.userData.userId },
             "favourites"
         )
+
         if (user.favourites.includes(req.params.id))
             user.favourites.slice(user.favourites.indexOf(req.params.id), 1)
+        await user.save()
         return res.status(200).json({
             result: "Favourites updated!"
         })
