@@ -1,6 +1,6 @@
 const express = require("express")
 
-const { auth } = require("../../middlewares/auth")
+const { admin } = require("../../middlewares/auth")
 const card = require("./cards.controllers")
 
 const router = express.Router()
@@ -10,6 +10,8 @@ router.post("/register/", card.register)
 
 router.get("/:card", card.find)
 
-router.delete("/:id", auth, card.delete)
+router.delete("/", admin, card.get)
+
+router.delete("/:id", admin, card.delete)
 
 module.exports = router

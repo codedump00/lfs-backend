@@ -10,9 +10,9 @@ const router = express.Router()
 router.post("/create/", merchant.create)
 router.post("/image/:id", admin, upload, merchant.upload)
 
-router.get("/", merchant.get)
-router.get("/id", merchant.findByID)
-router.get("/category", merchant.category)
+router.get("/:page", merchant.get)
+router.get("/id/:id", merchant.findByID)
+router.get("/category/:page", merchant.category)
 
 router.put("/:id", admin, merchant.update)
 router.put("/image/:id", admin, upload, merchant.updateImages)

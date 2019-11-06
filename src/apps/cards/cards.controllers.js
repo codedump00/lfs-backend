@@ -32,6 +32,19 @@ const find = async (req, res) => {
     }
 }
 
+const get = async (req, res) => {
+    try {
+        const cards = await Card.find({})
+        return res.status(200).json({
+            result: cards
+        })
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error ocurred!"
+        })
+    }
+}
+
 const del = async (req, res) => {
     try {
         await Card.deleteOne({ _id: req.params.id })
@@ -45,4 +58,4 @@ const del = async (req, res) => {
     }
 }
 
-module.exports = { register, delete: del, find }
+module.exports = { register, delete: del, find, get }

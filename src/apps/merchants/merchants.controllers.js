@@ -34,14 +34,17 @@ const create = async (req, res) => {
 
 const get = async (req, res) => {
     try {
+        const page = req.params.page || 1
+        const result = 15
         const merchants = await Merchant.find(
             {},
             "name address location contact category timestamp media"
         )
-            .skip(req.params.result || 20 * (req.params.page || 1 - 1))
-            .limit(req.params.result || 20)
+            .skip(result * page - result)
+            .limit(result)
         return res.status(200).send({
-            result: merchants
+            result: merchants,
+            count: await Merchant.estimatedDocumentCount()
         })
     } catch (err) {
         return res.status(500).json({
@@ -52,10 +55,7 @@ const get = async (req, res) => {
 
 const findByID = async (req, res) => {
     try {
-        const merchant = await Merchant.findById(
-            req.userData.userId,
-            "name email address"
-        )
+        const merchant = await Merchant.findById(req.params.id)
         return res.status(200).send({
             result: merchant
         })
@@ -68,14 +68,16 @@ const findByID = async (req, res) => {
 
 const category = async (req, res) => {
     try {
+        const page = req.params.page || 1
+        const result = 15
         const merchants = await Merchant.find({
             category: {
                 $regex: RegExp(`${req.params.category}`),
                 $options: "i"
             }
         })
-            .skip(req.params.result || 20 * (req.params.page || 1 - 1))
-            .limit(req.params.result || 20)
+            .skip(result * page - result)
+            .limit(result)
 
         return res.status(200).json({
             result: merchants
