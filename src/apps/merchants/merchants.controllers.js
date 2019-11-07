@@ -28,7 +28,7 @@ const create = async (req, res) => {
     } catch (err) {
         console.log(err)
         return res.status(400).json({
-            message: "Error creating merchant!"
+            message: "Error creating merchant!",
             error: err
         })
     }
