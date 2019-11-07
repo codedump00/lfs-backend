@@ -12,10 +12,6 @@ const Merchant = mongoose.Schema({
         // eslint-disable-next-line security/detect-unsafe-regex
         match: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
     },
-    password: {
-        type: String,
-        required: true
-    },
     address: {
         type: String,
         required: true
@@ -35,7 +31,7 @@ const Merchant = mongoose.Schema({
     },
     media: {
         type: Object
-    },
+    }
 })
 
 module.exports = mongoose.model("Merchant", Merchant)

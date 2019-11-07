@@ -17,6 +17,7 @@ const create = async (req, res) => {
             name: req.body.name,
             contact: req.body.contact,
             address: req.body.address,
+            location: req.body.location,
             category: req.body.category,
             timestamp: Date.now()
         })
