@@ -29,6 +29,7 @@ const create = async (req, res) => {
         console.log(err)
         return res.status(400).json({
             message: "Error creating merchant!"
+            error: err
         })
     }
 }
