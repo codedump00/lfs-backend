@@ -123,7 +123,7 @@ const imageUpload = async (req, res) => {
     // req.files is array of `photos` files
     // req.body will contain the text fields, if there were any
     try {
-        console.log(req.files)
+        console.log(req.files, req.file)
         const media = await upload(req.files)
         if (media.error)
             return res.status(400).json({
