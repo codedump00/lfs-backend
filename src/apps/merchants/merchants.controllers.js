@@ -123,11 +123,11 @@ const imageUpload = async (req, res) => {
     // req.files is array of `photos` files
     // req.body will contain the text fields, if there were any
     try {
+        console.log(req.files)
         const media = await upload(req.files)
         if (media.error)
             return res.status(400).json({
-                error: "Image uploading failed.",
-                media: media
+                error: "Image uploading failed."
             })
         await Merchant.findByIdAndUpdate(req.params.id, {
             media: media
@@ -137,8 +137,7 @@ const imageUpload = async (req, res) => {
         })
     } catch (err) {
         return res.status(400).json({
-            error: "Image uploading failed.",
-            error: err
+            error: "Image uploading failed."
         })
     }
 }
