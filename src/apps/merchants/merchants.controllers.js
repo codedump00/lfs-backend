@@ -127,7 +127,7 @@ const imageUpload = async (req, res) => {
         if (media.error)
             return res.status(400).json({
                 error: "Image uploading failed.",
-                media: media.error
+                media: media
             })
         await Merchant.findByIdAndUpdate(req.params.id, {
             media: media
