@@ -1,17 +1,19 @@
-const express = require("express")
+const express = require("express");
 
-const { admin } = require("../../middlewares/auth")
-const card = require("./cards.controllers")
+const { admin } = require("../../middlewares/auth");
+const card = require("./cards.controllers");
 
-const router = express.Router()
+const router = express.Router();
 
 /* POST methods */
-router.post("/register/", card.register)
+router.post("/register/", card.register);
 
-router.get("/:card", card.find)
+router.get("/:card", card.find);
 
-router.delete("/", admin, card.get)
+router.get("/", admin, card.get);
 
-router.delete("/:id", admin, card.delete)
+router.put("/:id", admin, card.update);
 
-module.exports = router
+router.delete("/:id", admin, card.delete);
+
+module.exports = router;
