@@ -1,8 +1,10 @@
+const mongoose = require("mongoose");
 const Card = require("./cards.models");
 
 const register = async (req, res) => {
     try {
         const card = Card({
+            _id: new mongoose.Types.ObjectId(),
             user: req.body.user || "",
             card: req.body.card,
             timestamp: Date.now()
