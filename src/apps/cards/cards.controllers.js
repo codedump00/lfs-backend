@@ -14,7 +14,7 @@ const register = async (req, res) => {
         });
     } catch (e) {
         return res.status(400).json({
-            error: "Error courred!"
+            error: "Error ocurred!"
         });
     }
 };
