@@ -23,7 +23,8 @@ const find = async (req, res) => {
     try {
         const card = await Card.findOne({ card: req.params.card });
         return res.status(200).json({
-            result: card
+            result: card,
+            count: await Card.estimatedDocumentCount()
         });
     } catch (e) {
         return res.status(400).json({

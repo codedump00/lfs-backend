@@ -6,7 +6,7 @@ const card = require("./cards.controllers");
 const router = express.Router();
 
 /* POST methods */
-router.post("/register/", card.register);
+router.post("/register", admin, card.register);
 
 router.get("/:card", card.find);
 
