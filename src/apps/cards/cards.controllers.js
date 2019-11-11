@@ -23,8 +23,7 @@ const find = async (req, res) => {
     try {
         const card = await Card.findOne({ card: req.params.card });
         return res.status(200).json({
-            result: card,
-            count: await Card.estimatedDocumentCount()
+            result: card
         });
     } catch (e) {
         return res.status(400).json({
@@ -35,9 +34,14 @@ const find = async (req, res) => {
 
 const get = async (req, res) => {
     try {
-        const cards = await Card.find({});
+        const page = req.params.page || 1;
+        const result = req.params.result || 15;
+        const cards = await Card.find({})
+            .skip(result * page - result)
+            .limit(result);
         return res.status(200).json({
-            result: cards
+            result: cards,
+            count: await Card.estimatedDocumentCount()
         });
     } catch (e) {
         return res.status(400).json({

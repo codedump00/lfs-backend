@@ -10,7 +10,7 @@ router.post("/register", admin, card.register);
 
 router.get("/:card", card.find);
 
-router.get("/", admin, card.get);
+router.get("/all/:page", admin, card.get);
 
 router.put("/:id", admin, card.update);
 
