@@ -56,7 +56,7 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try {
         const card = await Card.findById(req.params.id);
-        card.name = req.body.name;
+        card.user = req.body.user;
         if (req.body.card && req.body.card.length > 5)
             card.card = req.body.card;
         await card.save();
