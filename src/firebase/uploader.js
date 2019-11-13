@@ -31,8 +31,11 @@ const upload = async files => {
 
 const remove = async image => {
   try {
+    console.log(image);
+    console.log(bucket.file(image));
     return await bucket.file(image).delete();
   } catch (e) {
+    console.log(e);
     return e;
   }
 };
