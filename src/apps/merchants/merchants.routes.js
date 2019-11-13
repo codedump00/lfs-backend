@@ -18,6 +18,6 @@ router.put("/:id", admin, merchant.update);
 router.put("/image/:id", admin, upload, merchant.updateImages);
 
 router.delete("/:id", admin, merchant.delete);
-router.delete("/image/:id", admin, merchant.deleteImages);
+router.delete("/image/:id/:image", admin, merchant.deleteImages);
 
 module.exports = router;
