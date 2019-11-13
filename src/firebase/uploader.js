@@ -30,7 +30,11 @@ const upload = async files => {
 };
 
 const remove = async image => {
-  return await bucket.file(image).delete();
+  try {
+    return await bucket.file(image).delete();
+  } catch (e) {
+    return e;
+  }
 };
 
 module.exports = { upload, remove };
