@@ -13,7 +13,7 @@ const upload = async files => {
     );
     await Promise.all(responses).then(response => {
       response.forEach(res => {
-        console.log(`${res}`);
+        console.log(res);
         media.names.push(res[0].metadata.name);
         media.src.push(BUCKET_URL + res[0].metadata.name);
       });
