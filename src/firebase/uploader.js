@@ -34,6 +34,7 @@ const remove = async image => {
         console.log(image);
         return await bucket.file(image).delete();
     } catch (e) {
+        console.log(e);
         return e;
     }
 };

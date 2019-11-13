@@ -152,9 +152,6 @@ const updateImages = async (req, res) => {
         const merchant = await Merchant.findById(req.params.id, "media");
         media.names.push.apply(media.names, merchant.media.names);
         media.src.push.apply(media.src, merchant.media.src);
-        // merchant.media.names.forEach(name => media.names.push(name));
-        // merchant.media.src.forEach(image => media.src.push(image));
-        console.log(merchant, media);
         await Merchant.findByIdAndUpdate(req.params.id, { media: media });
         return res.status(201).json({
             media: media
