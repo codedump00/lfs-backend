@@ -150,16 +150,17 @@ const updateImages = async (req, res) => {
         error: "Image uploading failed."
       });
     const merchant = await Merchant.findById(req.params.id);
-    media.names.concat(merchant.media.names);
-    media.src.concat(merchant.media.src);
-    const update = await Merchant.updateOne(
-      { id: req.params.id },
-      { media: media }
-    );
+    merchant.media.names.forEach(name => media.names.push(name));
+    merchant.media.src.forEach(image => media.src.push(image));
+    await Merchant.updateOne({ id: req.params.id }, { media: media });
     return res.status(201).json({
-      media: update.media
+      media: media
     });
-  } catch (err) {}
+  } catch (err) {
+    return res.status(400).json({
+      error: e
+    });
+  }
 };
 
 const deleteImages = async (req, res) => {
