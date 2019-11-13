@@ -13,9 +13,9 @@ const upload = async files => {
     );
     await Promise.all(responses).then(response => {
       response.forEach(res => {
-        console.log(res);
-        media.names.push(res[0].metadata.name);
-        media.src.push(BUCKET_URL + res[0].metadata.name);
+        console.log(res.name);
+        media.names.push(res.name);
+        media.src.push(BUCKET_URL + res.name);
       });
       files.forEach(image =>
         // eslint-disable-next-line security/detect-non-literal-fs-filename
