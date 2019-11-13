@@ -150,8 +150,9 @@ const updateImages = async (req, res) => {
         error: "Image uploading failed."
       });
     const merchant = await Merchant.findById(req.params.id);
-    merchant.media.names.push.apply(merchant.media.names, media.names);
-    merchant.media.src.push.apply(merchant.media.src, media.src);
+    media.names.push.apply(media.names, merchant.media.names);
+    media.src.push.apply(media.src, merchant.media.src);
+    await merchant.update({ media: media });
     await merchant.save();
     return res.status(201).json({
       media: merchant.media
