@@ -159,6 +159,19 @@ const updateImages = async (req, res) => {
   } catch (err) {}
 };
 
+const deleteImages = async (req, res) => {
+  try {
+    const res = await remove(req.body.files);
+    return res.status(200).json({
+      res: res
+    });
+  } catch (e) {
+    return res.status(400).json({
+      error: e
+    });
+  }
+};
+
 module.exports = {
   create,
   get,
@@ -167,5 +180,6 @@ module.exports = {
   delete: del,
   upload: imageUpload,
   category,
-  updateImages
+  updateImages,
+  deleteImages
 };

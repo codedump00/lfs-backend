@@ -1,22 +1,23 @@
-const express = require("express")
+const express = require("express");
 
-const { admin } = require("../../middlewares/auth")
-const merchant = require("./merchants.controllers")
-const upload = require("../../middlewares/multer")
+const { admin } = require("../../middlewares/auth");
+const merchant = require("./merchants.controllers");
+const upload = require("../../middlewares/multer");
 
-const router = express.Router()
+const router = express.Router();
 
 /* POST methods */
-router.post("/create/", admin, merchant.create)
-router.post("/image/:id", admin, upload, merchant.upload)
+router.post("/create/", admin, merchant.create);
+router.post("/image/:id", admin, upload, merchant.upload);
 
-router.get("/:page", merchant.get)
-router.get("/id/:id", merchant.findByID)
-router.get("/category/:page", merchant.category)
+router.get("/:page", merchant.get);
+router.get("/id/:id", merchant.findByID);
+router.get("/category/:page", merchant.category);
 
-router.put("/:id", admin, merchant.update)
-router.put("/image/:id", admin, upload, merchant.updateImages)
+router.put("/:id", admin, merchant.update);
+router.put("/image/:id", admin, upload, merchant.updateImages);
 
-router.delete("/:id", admin, merchant.delete)
+router.delete("/:id", admin, merchant.delete);
+router.delete("/image/:id", admin, merchant.deleteImages);
 
-module.exports = router
+module.exports = router;
