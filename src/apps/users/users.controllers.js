@@ -65,7 +65,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ card_id: req.body.card_id });
     if (user.verified === "true") {
       const ok = await bcrypt.compare(req.body.password, user.password);
       if (ok) {
