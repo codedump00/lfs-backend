@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = require("./users.models");
 const Card = require("../cards/cards.models");
-const availableIds = require("../../db/db.ids");
 
 const signup = async (req, res) => {
     try {
