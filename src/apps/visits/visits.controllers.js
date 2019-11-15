@@ -71,4 +71,4 @@ const del = async (req, res) => {
     }
 };
 
-module.exports = { create, delete: del, find, get, update };
+module.exports = { create, delete: del, get, update };
