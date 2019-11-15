@@ -166,7 +166,6 @@ const updateImages = async (req, res) => {
 const deleteImages = async (req, res) => {
     try {
         const response = await remove(req.params.image);
-
         return res.status(200).json({
             res: response
         });
