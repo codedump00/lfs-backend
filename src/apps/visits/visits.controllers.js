@@ -90,6 +90,7 @@ const search = async (req, res) => {
             error: "Card not found!"
         });
     } catch (e) {
+        console.log(e);
         return res.status(400).json({
             error: "Error ocurred!",
             e: e
