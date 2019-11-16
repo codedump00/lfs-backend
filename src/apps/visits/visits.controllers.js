@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Visit = require("./visits.models");
 const Card = require("../cards/cards.models");
-const User = require("../users/cards.models");
+const User = require("../users/users.models");
 
 const create = async (req, res) => {
     try {
