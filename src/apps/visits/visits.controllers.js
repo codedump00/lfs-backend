@@ -91,7 +91,8 @@ const search = async (req, res) => {
         });
     } catch (e) {
         return res.status(400).json({
-            error: "Error ocurred!"
+            error: "Error ocurred!",
+            e: e
         });
     }
 };
