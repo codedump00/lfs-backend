@@ -73,7 +73,7 @@ const del = async (req, res) => {
     }
 };
 
-const search = async (req, res) => {
+const searchUserInfo = async (req, res) => {
     try {
         const card = await Card.findOne({ card: req.params.card });
         console.log(card);
@@ -87,7 +87,7 @@ const search = async (req, res) => {
             });
         }
         return res.status(400).json({
-            error: "Card not found!"
+            error: "Visits not found!"
         });
     } catch (e) {
         console.log(e);
@@ -98,4 +98,4 @@ const search = async (req, res) => {
     }
 };
 
-module.exports = { create, delete: del, get, update, search };
+module.exports = { create, delete: del, get, update, searchUserInfo };

@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", visits.create);
 
 router.get("/:user/:merchant", visits.get);
-router.get("/search/:card", visits.search);
+router.get("/search/:card", visits.searchUserInfo);
 
 router.put("/", visits.update);
 
