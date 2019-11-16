@@ -75,6 +75,7 @@ const del = async (req, res) => {
 
 const searchUserInfo = async (req, res) => {
     try {
+        console.log("Here");
         const card = await Card.findOne({ card: req.params.card });
         console.log(card);
         if (card) {
@@ -90,7 +91,7 @@ const searchUserInfo = async (req, res) => {
             error: "Visits not found!"
         });
     } catch (e) {
-        console.log(e);
+        console.error(e);
         return res.status(400).json({
             error: "Error ocurred!",
             e: e
