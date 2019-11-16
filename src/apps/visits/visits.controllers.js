@@ -76,6 +76,7 @@ const del = async (req, res) => {
 const search = async (req, res) => {
     try {
         const card = await Card.findOne({ card: req.params.card });
+        console.log(card);
         if (card) {
             const user = await User.findOne(
                 { card_id: req.params.card },
