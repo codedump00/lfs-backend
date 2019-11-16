@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Visit = require("./visits.models");
+const Card = require("../cards/cards.models");
+const User = require("../users/cards.models");
 
 const create = async (req, res) => {
     try {
@@ -71,4 +73,26 @@ const del = async (req, res) => {
     }
 };
 
-module.exports = { create, delete: del, get, update };
+const search = async (req, res) => {
+    try {
+        const card = await Card.findOne({ card: req.params.card });
+        if (card) {
+            const user = await User.findOne(
+                { card_id: req.params.card },
+                "_id name card_id"
+            );
+            return res.status(200).json({
+                user: user
+            });
+        }
+        return res.status(400).json({
+            error: "Card not found!"
+        });
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error ocurred!"
+        });
+    }
+};
+
+module.exports = { create, delete: del, get, update, search };
