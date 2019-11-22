@@ -19,6 +19,7 @@ const create = async (req, res) => {
             address: req.body.address,
             location: req.body.location,
             category: req.body.category,
+            discount: req.body.discount,
             timestamp: Date.now()
         });
         await merchant.save();
@@ -39,10 +40,7 @@ const get = async (req, res) => {
     try {
         const page = req.params.page || 1;
         const result = 15;
-        const merchants = await Merchant.find(
-            {},
-            "name address location contact category timestamp media"
-        )
+        const merchants = await Merchant.find({})
             .skip(result * page - result)
             .limit(result);
         return res.status(200).send({

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const Merchant = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -25,6 +25,9 @@ const Merchant = mongoose.Schema({
     category: {
         type: String
     },
+    discount: {
+        type: String
+    },
     timestamp: {
         type: Date,
         required: true
@@ -32,6 +35,6 @@ const Merchant = mongoose.Schema({
     media: {
         type: Object
     }
-})
+});
 
-module.exports = mongoose.model("Merchant", Merchant)
+module.exports = mongoose.model("Merchant", Merchant);
