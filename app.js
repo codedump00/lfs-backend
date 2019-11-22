@@ -21,7 +21,8 @@ mongoose
     // eslint-disable-next-line no-undef
     .connect(process.env.LFS_URI, {
         useNewUrlParser: true,
-        useCreateIndex: true
+        useCreateIndex: true,
+        useUnifiedTopology: true
     })
     .then(() => console.log("Connected to mongodb ..."))
     .catch(err => console.log(err));
