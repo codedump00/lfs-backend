@@ -75,20 +75,12 @@ const del = async (req, res) => {
 
 const searchUserInfo = async (req, res) => {
     try {
-        console.log("Here");
-        const card = await Card.findOne({ card: req.params.card });
-        console.log(card);
-        if (card) {
-            const user = await User.findOne(
-                { card_id: req.params.card },
-                "_id name card_id"
-            );
-            return res.status(200).json({
-                user: user
-            });
-        }
-        return res.status(400).json({
-            error: "Visits not found!"
+        const user = await User.findOne(
+            { card_id: req.params.card },
+            "_id name card_id"
+        );
+        return res.status(200).json({
+            user: user
         });
     } catch (e) {
         console.error(e);
