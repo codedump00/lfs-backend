@@ -58,7 +58,7 @@ const get = async (req, res) => {
 
 const findByID = async (req, res) => {
     try {
-        const merchant = await Merchant.findById(req.params.id);
+        const merchant = await Merchant.findOne({ _id: req.params.id });
         return res.status(200).send({
             result: merchant
         });
