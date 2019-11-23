@@ -20,7 +20,8 @@ const create = async (req, res) => {
             location: req.body.location,
             category: req.body.category,
             discount: req.body.discount,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            hours: req.body.hours
         });
         await merchant.save();
         return res.status(201).json({

@@ -34,6 +34,10 @@ const Merchant = mongoose.Schema({
     },
     media: {
         type: Object
+    },
+    hours: {
+        type: String,
+        default: "8 am - 12 pm"
     }
 });
 
