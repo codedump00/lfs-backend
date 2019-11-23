@@ -200,6 +200,83 @@ const reSendCode = async (req, res) => {
     }
 };
 
+const sendActivationCode = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.params.email }, "email");
+        if (user !== null) {
+            const code = Math.floor(Math.random() * 1000000 + 54);
+            axios({
+                method: "POST",
+                url: "https://lightmailer.herokuapp.com/mailer",
+                data: {
+                    to: `${user.email}`,
+                    subject: "User Verification",
+                    text: `
+                    Your activation code is: \n
+                    ${code}`
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(async () => {
+                    user.code = code;
+                    await user.save();
+                    return res.status(201).json({
+                        message: `Confirmation code has been sent!`
+                    });
+                })
+                .catch(err => {
+                    return res.status(400).json({
+                        error: `Error sending confirmation code!!`
+                    });
+                });
+        }
+    } catch (e) {
+        return res.status(400).json({
+            error: `Error sending confirmation code!!`
+        });
+    }
+};
+
+const verifyCode = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.params.email }, "code");
+        if (user && user.code === req.params.code) {
+            return res.status(200).json({
+                result: true
+            });
+        }
+        return res.status(400).json({
+            result: false
+        });
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error ocurred!"
+        });
+    }
+};
+
+const changePassword = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email }, "code");
+        if (user && user.code === req.body.code && req.body.password) {
+            user.password = await bcrypt.hash(req.body.password, 10);
+            await user.save();
+            return res.status(200).json({
+                message: "Password changed!"
+            });
+        }
+        return res.status(400).json({
+            error: "Error ocurred!"
+        });
+    } catch (e) {
+        return res.status(400).json({
+            error: "Error ocurred!"
+        });
+    }
+};
+
 const verify = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id }, "verified");
@@ -288,5 +365,8 @@ module.exports = {
     reSendCode,
     updateFavourites,
     deleteFavourites,
-    delete: del
+    delete: del,
+    sendActivationCode,
+    verifyCode,
+    changePassword
 };

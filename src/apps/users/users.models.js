@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const User = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -27,11 +27,14 @@ const User = mongoose.Schema({
         required: true,
         unique: true
     },
-    favourites: [{type: mongoose.Schema.Types.ObjectId}],
+    favourites: [{ type: mongoose.Schema.Types.ObjectId }],
     timestamp: {
         type: Date,
         required: true
+    },
+    code: {
+        type: String
     }
-})
+});
 
-module.exports = mongoose.model("User", User)
+module.exports = mongoose.model("User", User);
