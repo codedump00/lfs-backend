@@ -220,8 +220,10 @@ const sendActivationCode = async (req, res) => {
                 }
             })
                 .then(async () => {
-                    user.code = code;
-                    await user.save();
+                    await User.updateOne(
+                        { email: req.params.email },
+                        { code: code }
+                    );
                     return res.status(201).json({
                         message: `Confirmation code has been sent!`
                     });
@@ -261,8 +263,12 @@ const changePassword = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email }, "code");
         if (user && user.code === req.body.code && req.body.password) {
-            user.password = await bcrypt.hash(req.body.password, 10);
-            await user.save();
+            await User.updateOne(
+                { email: req.body.email },
+                {
+                    password: await bcrypt.hash(req.body.password, 10)
+                }
+            );
             return res.status(200).json({
                 message: "Password changed!"
             });
