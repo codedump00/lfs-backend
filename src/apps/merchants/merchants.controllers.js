@@ -166,13 +166,17 @@ const deleteImages = async (req, res) => {
     try {
         //  await remove(req.params.image);
         const { newMedia } = Merchant.findById(req.params.id, "media");
+        console.log(newMedia);
         const index = newMedia.names.indexOf(req.params.image);
+        console.log(index);
         if (index > -1) {
             newMedia.names.splice(index, 1);
             const url = newMedia.src.find(each =>
                 each.contains(req.params.image)
             );
+            console.log(url);
             const urlIndex = newMedia.src.indexOf(url);
+            console.log(urlIndex);
             if (urlIndex > -1) {
                 newMedia.src.splice(urlIndex, 1);
                 await Merchant.updateOne(
@@ -184,9 +188,12 @@ const deleteImages = async (req, res) => {
                 });
             }
         }
-    } catch (e) {
         return res.status(400).json({
-            error: e
+            error: "Error"
+        });
+    } catch (err) {
+        return res.status(400).json({
+            error: err
         });
     }
 };
