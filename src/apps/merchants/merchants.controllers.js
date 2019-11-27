@@ -164,10 +164,26 @@ const updateImages = async (req, res) => {
 
 const deleteImages = async (req, res) => {
     try {
-        const response = await remove(req.params.image);
-        return res.status(200).json({
-            result: response
-        });
+        //  await remove(req.params.image);
+        const { newMedia } = Merchant.findById(req.params.id, "media");
+        const index = newMedia.names.indexOf(req.params.image);
+        if (index > -1) {
+            newMedia.names.splice(index, 1);
+            const url = newMedia.src.find(each =>
+                each.contains(req.params.image)
+            );
+            const urlIndex = newMedia.src.indexOf(url);
+            if (urlIndex > -1) {
+                newMedia.src.splice(urlIndex, 1);
+                await Merchant.updateOne(
+                    { _id: req.params.id },
+                    { media: newMedia }
+                );
+                return res.status(200).json({
+                    media: newMedia
+                });
+            }
+        }
     } catch (e) {
         return res.status(400).json({
             error: e
