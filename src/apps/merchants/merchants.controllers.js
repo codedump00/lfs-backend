@@ -166,15 +166,11 @@ const deleteImages = async (req, res) => {
     try {
         //  await remove(req.params.image);
         const { media } = await Merchant.findById(req.params.id, "media");
-        console.log(media);
         const index = media.names.indexOf(req.params.image);
-        console.log(index);
         if (index > -1) {
             media.names.splice(index, 1);
-            const url = media.src.find(each => each.contains(req.params.image));
-            console.log(url);
+            const url = media.src.find(each => each.includes(req.params.image));
             const urlIndex = media.src.indexOf(url);
-            console.log(urlIndex);
             if (urlIndex > -1) {
                 media.src.splice(urlIndex, 1);
                 await Merchant.updateOne(
